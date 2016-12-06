@@ -5,13 +5,22 @@
 
 class StandardEvolutionaryAlgorithm : public IEvolutionaryAlgorithm {
 public:
-    std::list<IElement> crossover() override;
+    virtual std::vector<IElement> crossover(std::vector<IElement>& tempPopulation) override;
 
-    std::list<IElement> mutate() override;
+    virtual  std::vector<IElement> mutate(std::vector<IElement>& tempPopulation) override;
 
-    std::list<IElement> reproduce() override;
+    virtual std::vector<IElement> reproduce() override;
 
-    std::list<IElement> success() override;
+    virtual std::vector<IElement> success(std::vector<IElement>& tempPopulation) override;
+
+    virtual bool finish() override;
+
+private:
+    IElement maxElement;
+    std::vector<IElement> theWorstElements;
+    const size_t POPULATION_SIZE = 20;
+    const size_t CROSSOVER_POINTS = 5;
+    const size_t MUTATION_SIZE = 4;
 };
 
 

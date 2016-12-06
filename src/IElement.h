@@ -6,7 +6,7 @@
 class IElement {
 public:
     virtual ~IElement() {};
-    virtual IElement mutate(IElement) = 0;
+    virtual IElement mutate() = 0;
     virtual IElement crossover(std::list<IElement>) = 0;
     virtual std::list<IElement> getNeighbour() = 0;
     virtual long fitness() = 0;

@@ -10,19 +10,18 @@ class IEvolutionaryAlgorithm {
 public:
     virtual ~IEvolutionaryAlgorithm() {}
 
-    virtual std::list<IElement> crossover() = 0;
-    virtual std::list<IElement> mutate() = 0;
-    virtual std::list<IElement> reproduce() = 0;
-    virtual std::list<IElement> success() = 0;
+    virtual std::vector<IElement> crossover(std::vector<IElement>& tempPopulation) = 0;
+    virtual std::vector<IElement> mutate(std::vector<IElement>& tempPopulation) = 0;
+    virtual std::vector<IElement> reproduce() = 0;
+    virtual void success(std::list<IElement>& tempPopulation) = 0;
     virtual bool finish() = 0;
 
-    const std::list<IElement> getPopulation() const {
+    const std::vector<IElement> getPopulation() const {
         return population;
     }
 
 protected:
-    std::list<IElement> population;
-
+    std::vector<IElement> population;
 };
 
 
