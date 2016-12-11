@@ -4,7 +4,7 @@ Runner::~Runner() {
 
 }
 
-std::list<IElement> Runner::run() {
+std::vector<IElement> Runner::run() {
     while (not algorithm->finish()) {
         algorithm->reproduce();
         algorithm->crossover();

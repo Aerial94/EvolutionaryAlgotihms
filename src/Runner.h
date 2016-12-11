@@ -10,7 +10,7 @@ class Runner {
 public:
     Runner(std::shared_ptr<IEvolutionaryAlgorithm> algorithm) : algorithm(algorithm) {}
     virtual ~Runner();
-    std::list<IElement> run();
+    std::vector<IElement> run();
 protected:
     std::shared_ptr<IEvolutionaryAlgorithm> algorithm;
 

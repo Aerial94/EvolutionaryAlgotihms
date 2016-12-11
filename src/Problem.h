@@ -6,7 +6,7 @@
 
 class Problem {
 public:
-    virtual std::list<IElement> select(IElement& point) = 0;
+    virtual std::vector<IElement> select(IElement& point) = 0;
     virtual long rate(IElement& point) = 0;
     virtual long generate() = 0;
 protected:
