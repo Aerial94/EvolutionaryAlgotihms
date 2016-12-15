@@ -1,25 +1,31 @@
 #ifndef EVOLUTIONARYALGOTIHMS_STANDARDEVOLUTIONARYALGORITHM_H
 #define EVOLUTIONARYALGOTIHMS_STANDARDEVOLUTIONARYALGORITHM_H
 
+#include <vector>
+#include <cstdio>
+#include <memory>
 #include "IEvolutionaryAlgorithm.h"
+#include "Problem.h"
 
 class StandardEvolutionaryAlgorithm : public IEvolutionaryAlgorithm {
 public:
-    virtual StandardEvolutionaryAlgorithm(const Problem& problem);
 
-    virtual std::vector<IElement> crossover(std::vector<IElement>& tempPopulation) override;
+    StandardEvolutionaryAlgorithm(std::unique_ptr<Problem> &problem);
 
-    virtual  std::vector<IElement> mutate(std::vector<IElement>& tempPopulation) override;
+    virtual std::vector<std::shared_ptr<IElement>> crossover(std::vector<std::shared_ptr<IElement>>& tempPopulation) override;
 
-    virtual std::vector<IElement> reproduce() override;
+    virtual  std::vector<std::shared_ptr<IElement>> mutate(std::vector<std::shared_ptr<IElement>>& tempPopulation) override;
 
-    virtual std::vector<IElement> success(std::vector<IElement>& tempPopulation) override;
+    virtual std::vector<std::shared_ptr<IElement>> reproduce() override;
+
+    virtual void success(std::vector<std::shared_ptr<IElement>>& tempPopulation) override;
 
     virtual bool finish() override;
 
 private:
-    IElement maxElement;
-    std::vector<IElement> theWorstElements;
+    std::unique_ptr<Problem> problem;
+    std::shared_ptr<IElement> maxElement;
+    std::vector<std::shared_ptr<IElement>> theWorstElements;
     unsigned currentPopulation;
     const size_t POPULATION_SIZE = 20;
     const size_t CROSSOVER_POINTS = 5;

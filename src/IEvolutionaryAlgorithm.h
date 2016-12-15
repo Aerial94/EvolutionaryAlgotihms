@@ -1,28 +1,27 @@
 #ifndef EVOLUTIONARYALGOTIHMS_IEVOLUTIONARYALGORITHM_H
 #define EVOLUTIONARYALGOTIHMS_IEVOLUTIONARYALGORITHM_H
 
-
-#include <list>
 #include "IElement.h"
-
+#include "Problem.h"
 
 class IEvolutionaryAlgorithm {
 public:
     virtual ~IEvolutionaryAlgorithm() {}
-    virtual IEvolutionaryAlgorithm(const Problem& problem);
-    virtual std::vector<IElement> crossover(std::vector<IElement>& tempPopulation) = 0;
-    virtual std::vector<IElement> mutate(std::vector<IElement>& tempPopulation) = 0;
-    virtual std::vector<IElement> reproduce() = 0;
-    virtual void success(std::list<IElement>& tempPopulation) = 0;
+    IEvolutionaryAlgorithm(){};
+    IEvolutionaryAlgorithm(const std::shared_ptr<Problem>& problem): problem(problem){}
+    virtual std::vector<std::shared_ptr<IElement>> crossover(std::vector<std::shared_ptr<IElement>>& tempPopulation) = 0;
+    virtual std::vector<std::shared_ptr<IElement>> mutate(std::vector<std::shared_ptr<IElement>>& tempPopulation) = 0;
+    virtual std::vector<std::shared_ptr<IElement>> reproduce() = 0;
+    virtual void success(std::vector<std::shared_ptr<IElement>>& tempPopulation) = 0;
     virtual bool finish() = 0;
 
-    const std::vector<IElement> getPopulation() const {
+    std::vector<std::shared_ptr<IElement>> const& getPopulation() const {
         return population;
     }
 
 protected:
     std::shared_ptr<Problem> problem;
-    std::vector<IElement> population;
+    std::vector<std::shared_ptr<IElement>> population;
 };
 
 

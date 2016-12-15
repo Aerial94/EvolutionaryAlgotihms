@@ -2,17 +2,17 @@
 #define EVOLUTIONARYALGOTIHMS_RUNNER_H
 
 
-#include <bits/shared_ptr.h>
+#include <memory>
 #include "IEvolutionaryAlgorithm.h"
 
 
 class Runner {
 public:
-    Runner(std::shared_ptr<IEvolutionaryAlgorithm> algorithm) : algorithm(algorithm) {}
+    Runner(std::unique_ptr<IEvolutionaryAlgorithm> algorithm) : algorithm(std::move(algorithm)) {}
     virtual ~Runner();
-    std::vector<IElement> run();
+    std::vector<std::shared_ptr<IElement>> run();
 protected:
-    std::shared_ptr<IEvolutionaryAlgorithm> algorithm;
+    std::unique_ptr<IEvolutionaryAlgorithm> algorithm;
 
 };
 

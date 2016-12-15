@@ -3,61 +3,65 @@
 #include <chrono>
 #include <algorithm>
 
-StandardEvolutionaryAlgorithm::StandardEvolutionaryAlgorithm(const std::shared_ptr<Problem> problem)
-        : currentPopulation(0), problem(problem) {
-    population = problem.generate();
-    theWorstElements = std::vector<IElement>(population.end() - std::min(population.size(), CROSSOVER_POINTS), population.end());
-    maxElement = tempPopulation[0];
+StandardEvolutionaryAlgorithm::StandardEvolutionaryAlgorithm(std::unique_ptr<Problem> &problem)
+        : currentPopulation(0), problem(std::move(problem)) {
+    population = problem->generate();
+    theWorstElements = std::vector<std::shared_ptr<IElement>>(population.end() - std::min(population.size(), CROSSOVER_POINTS),
+                                                   population.end());
+    maxElement = population[0];
 }
 
-std::vector <IElement> StandardEvolutionaryAlgorithm::crossover(const std::vector <IElement> &tempPopulation) {
-    std::vector <IElement> newPopulation(tempPopulation.begin(), tempPopulation.end());
-    std::for_each(theWorstElements.begin(), theWorstElements.end(), [](IElement &element) -> IElement {
-        newPopulation.push_back(element.crossover(maxElement));
-    });
-    return newPopulation;
-}
 
-std::vector <IElement> StandardEvolutionaryAlgorithm::mutate(std::vector <IElement> &tempPopulation) {
-    unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
+std::vector<std::shared_ptr<IElement>>
+StandardEvolutionaryAlgorithm::mutate(std::vector<std::shared_ptr<IElement>> &tempPopulation) {
+    unsigned seed = (unsigned int) std::chrono::system_clock::now().time_since_epoch().count();
 
     std::shuffle(tempPopulation.begin(), tempPopulation.end(), std::default_random_engine(seed));
-    std::vector <IElement> mutatedPopulation;
+    std::vector<std::shared_ptr<IElement>> mutatedPopulation;
     int i = 0;
 
-    for (IElement element: tempPopulation) {
+    for (std::shared_ptr<IElement> &element: tempPopulation) {
         if (++i > MUTATION_SIZE) {
             mutatedPopulation.push_back(element);
         } else {
-            mutatedPopulation.push_back(element.crossover());
+            mutatedPopulation.push_back(std::move(element->mutate()));
         }
     }
     return mutatedPopulation;
 }
 
-std::vector <IElement> StandardEvolutionaryAlgorithm::reproduce() {
-    std::vector <IElement> population = getPopulation();
-    std::vector <IElement> newPopulation;
-    for (IElement element: population) {
-        std::vector <IElement> neighbours = problem->select(element);
-        newPopulation.splice(newPopulation.end(), neighbours);
+std::vector<std::shared_ptr<IElement>> StandardEvolutionaryAlgorithm::reproduce() {
+    std::vector<std::shared_ptr<IElement>> population = std::move(getPopulation());
+    std::vector<std::shared_ptr<IElement>> newPopulation;
+    for (std::shared_ptr<IElement> &element: population) {
+        std::vector<std::shared_ptr<IElement>> neighbours = problem->select(*element);
+        newPopulation.insert(newPopulation.end(), neighbours.begin(), neighbours.end());
         newPopulation.push_back(element);
     }
     return newPopulation;
 }
 
-void StandardEvolutionaryAlgorithm::success(std::vector <IElement> &tempPopulation) {
-    std::sort(tempPopulation.begin(), tempPopulation.end(), [](const IElement &a, const IElement &b) -> bool {
-        return problem->rate(a) > problem->rate(b);
-    });
-    population = std::vector<IElement>(tempPopulation.begin(),
-                                       tempPopulation.begin() + std::min(tempPopulation.size(), POPULATION_SIZE));
-    theWorstElements = std::vector<IElement>(tempPopulation.end() - std::min(newPopulation.size(), CROSSOVER_POINTS),
-                                             newPopulation.end());
-    maxElement = tempPopulation[0];
+void StandardEvolutionaryAlgorithm::success(std::vector<std::shared_ptr<IElement>> &tempPopulation) {
+    std::sort(tempPopulation.begin(), tempPopulation.end(),
+              [&](std::shared_ptr<IElement> &a, std::shared_ptr<IElement> &b) -> bool {
+                  return problem->rate(a) > problem->rate(b);
+              });
+    population = std::vector<std::shared_ptr<IElement>>(tempPopulation.begin(),
+                                                        tempPopulation.begin() +
+                                                        std::min(tempPopulation.size(), POPULATION_SIZE));
+    theWorstElements = std::vector<std::shared_ptr<IElement>>(
+            tempPopulation.end() - std::min(tempPopulation.size(), CROSSOVER_POINTS),
+            tempPopulation.end());
     currentPopulation += 1;
 }
 
 bool StandardEvolutionaryAlgorithm::finish() {
     return currentPopulation > POPULATION_SIZE;
+}
+
+std::vector<std::shared_ptr<IElement>>
+StandardEvolutionaryAlgorithm::crossover(std::vector<std::shared_ptr<IElement>> &tempPopulation) {
+    std::vector<std::shared_ptr<IElement>> newPopulation(tempPopulation.begin(), tempPopulation.end());
+
+    return newPopulation;
 }
