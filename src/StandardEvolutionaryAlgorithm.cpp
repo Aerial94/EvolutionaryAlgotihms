@@ -1,4 +1,5 @@
 #include "StandardEvolutionaryAlgorithm.h"
+#include "FindMinimumProblem.h"
 #include <random>
 #include <chrono>
 #include <algorithm>
@@ -34,7 +35,7 @@ std::vector<std::shared_ptr<IElement>> StandardEvolutionaryAlgorithm::reproduce(
     std::vector<std::shared_ptr<IElement>> population = std::move(getPopulation());
     std::vector<std::shared_ptr<IElement>> newPopulation;
     for (std::shared_ptr<IElement> &element: population) {
-        std::vector<std::shared_ptr<IElement>> neighbours = problem->select(*element);
+        std::vector<std::shared_ptr<IElement>> neighbours = problem->select(element);
         newPopulation.insert(newPopulation.end(), neighbours.begin(), neighbours.end());
         newPopulation.push_back(element);
     }
@@ -48,7 +49,7 @@ void StandardEvolutionaryAlgorithm::success(std::vector<std::shared_ptr<IElement
               });
     population = std::vector<std::shared_ptr<IElement>>(tempPopulation.begin(),
                                                         tempPopulation.begin() +
-                                                        std::min(tempPopulation.size(), POPULATION_SIZE));
+                                                        std::min(tempPopulation.size(), FindMinimumProblem::POPULATION_SIZE));
     theWorstElements = std::vector<std::shared_ptr<IElement>>(
             tempPopulation.end() - std::min(tempPopulation.size(), CROSSOVER_POINTS),
             tempPopulation.end());
@@ -56,7 +57,7 @@ void StandardEvolutionaryAlgorithm::success(std::vector<std::shared_ptr<IElement
 }
 
 bool StandardEvolutionaryAlgorithm::finish() {
-    return currentPopulation > POPULATION_SIZE;
+    return currentPopulation > NUMBER_OF_POPULATION;
 }
 
 std::vector<std::shared_ptr<IElement>>

@@ -27,10 +27,10 @@ private:
     std::shared_ptr<IElement> maxElement;
     std::vector<std::shared_ptr<IElement>> theWorstElements;
     unsigned currentPopulation;
-    const size_t POPULATION_SIZE = 20;
     const size_t CROSSOVER_POINTS = 5;
     const size_t MUTATION_SIZE = 4;
     const unsigned NUMBER_OF_POPULATION = 1000;
+
 };
 
 
