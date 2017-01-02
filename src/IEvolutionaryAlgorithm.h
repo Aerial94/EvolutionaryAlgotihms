@@ -8,7 +8,6 @@ class IEvolutionaryAlgorithm {
 public:
     virtual ~IEvolutionaryAlgorithm() {}
     IEvolutionaryAlgorithm(){};
-    IEvolutionaryAlgorithm(const std::shared_ptr<Problem>& problem): problem(problem){}
     virtual std::vector<std::shared_ptr<IElement>> crossover(std::vector<std::shared_ptr<IElement>>& tempPopulation) = 0;
     virtual std::vector<std::shared_ptr<IElement>> mutate(std::vector<std::shared_ptr<IElement>>& tempPopulation) = 0;
     virtual std::vector<std::shared_ptr<IElement>> reproduce() = 0;
@@ -20,7 +19,7 @@ public:
     }
 
 protected:
-    std::shared_ptr<Problem> problem;
+    std::unique_ptr<Problem> problem;
     std::vector<std::shared_ptr<IElement>> population;
 };
 

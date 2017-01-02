@@ -28,7 +28,7 @@ long FindMinimumProblem::rate(std::shared_ptr<IElement> &point) {
 
 std::vector<std::shared_ptr<IElement>> FindMinimumProblem::generate() {
     unsigned seed = (unsigned int) std::chrono::system_clock::now().time_since_epoch().count();
-    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
+    std::uniform_real_distribution<double> distribution(-100.0, 100.0);
     std::default_random_engine generator(seed);
     std::vector<std::shared_ptr<IElement>> newPoints;
 
