@@ -10,7 +10,7 @@ public:
 
     std::vector<std::shared_ptr<IElement>> select(std::shared_ptr<IElement> &point) override;
 
-    long rate(std::shared_ptr<IElement> &point) override;
+    double rate(std::shared_ptr<IElement> &point) override;
 
     std::vector<std::shared_ptr<IElement>> generate() override;
 

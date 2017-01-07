@@ -22,8 +22,9 @@ std::vector<std::shared_ptr<IElement>> FindMinimumProblem::select(std::shared_pt
     return newPoints;
 }
 
-long FindMinimumProblem::rate(std::shared_ptr<IElement> &point) {
-    return 0;
+double FindMinimumProblem::rate(std::shared_ptr<IElement> &point) {
+    auto cartesianPoint = std::static_pointer_cast<CartesianPoint>(point);
+    return - cartesianPoint->getX() * cartesianPoint->getX() - cartesianPoint->getY() * cartesianPoint->getY();
 }
 
 std::vector<std::shared_ptr<IElement>> FindMinimumProblem::generate() {

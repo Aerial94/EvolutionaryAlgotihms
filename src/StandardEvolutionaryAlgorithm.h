@@ -10,7 +10,7 @@
 class StandardEvolutionaryAlgorithm : public IEvolutionaryAlgorithm {
 public:
 
-    StandardEvolutionaryAlgorithm(std::unique_ptr<Problem> problem);
+    StandardEvolutionaryAlgorithm(std::shared_ptr<Problem> problem);
 
     virtual std::vector<std::shared_ptr<IElement>> crossover(std::vector<std::shared_ptr<IElement>>& tempPopulation) override;
 

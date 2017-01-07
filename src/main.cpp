@@ -8,8 +8,8 @@
 #define CATCH_CONFIG_MAIN
 
 int main(int argc, char* argv[])  {
-    std::unique_ptr<Problem> problem(new FindMinimumProblem());
-    std::unique_ptr<IEvolutionaryAlgorithm> algorithm(new StandardEvolutionaryAlgorithm(std::move(problem)));
+    std::shared_ptr<Problem> problem(new FindMinimumProblem());
+    std::unique_ptr<IEvolutionaryAlgorithm> algorithm(new StandardEvolutionaryAlgorithm(problem));
     Runner runner(std::move(algorithm));
     runner.run();
     return 0;

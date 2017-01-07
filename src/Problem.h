@@ -8,7 +8,7 @@
 class Problem {
 public:
     virtual std::vector<std::shared_ptr<IElement>> select(std::shared_ptr<IElement>& point) = 0;
-    virtual long rate(std::shared_ptr<IElement>& point) = 0;
+    virtual double rate(std::shared_ptr<IElement>& point) = 0;
     virtual std::vector<std::shared_ptr<IElement>> generate() = 0;
 protected:
 };

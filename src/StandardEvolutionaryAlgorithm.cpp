@@ -1,15 +1,15 @@
 #include "StandardEvolutionaryAlgorithm.h"
 #include "FindMinimumProblem.h"
+#include "CartesianPoint.h"
 #include <random>
 #include <chrono>
 #include <algorithm>
+#include <iostream>
 
-StandardEvolutionaryAlgorithm::StandardEvolutionaryAlgorithm(std::unique_ptr<Problem> problem) {
+StandardEvolutionaryAlgorithm::StandardEvolutionaryAlgorithm(std::shared_ptr<Problem> problem) : IEvolutionaryAlgorithm(problem) {
     currentPopulation = 0;
-    problem = std::move(problem);
     population = problem->generate();
-    theWorstElements = std::vector<std::shared_ptr<IElement>>(population.end() - std::min(population.size(), CROSSOVER_POINTS),
-                                                   population.end());
+    theWorstElements = std::vector<std::shared_ptr<IElement>>(population.end() - std::min(population.size(), CROSSOVER_POINTS), population.end());
     maxElement = population[0];
 }
 
