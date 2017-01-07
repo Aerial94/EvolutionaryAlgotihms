@@ -5,7 +5,7 @@
 
 std::shared_ptr<IElement> CartesianPoint::mutate() {
     unsigned seed = (unsigned int) std::chrono::system_clock::now().time_since_epoch().count();
-    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
+    std::uniform_real_distribution<double> distribution(-0.3, 0.3);
     std::default_random_engine generator(seed);
     double newX = x + distribution(generator);
     double newY = y + distribution(generator);
