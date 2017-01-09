@@ -12,15 +12,19 @@ public:
 
     StandardEvolutionaryAlgorithm(std::shared_ptr<Problem> problem);
 
-    virtual std::vector<std::shared_ptr<IElement>> crossover(std::vector<std::shared_ptr<IElement>>& tempPopulation) override;
+    virtual std::vector<std::shared_ptr<IElement>>
+    crossover(std::vector<std::shared_ptr<IElement>> &tempPopulation) override;
 
-    virtual  std::vector<std::shared_ptr<IElement>> mutate(std::vector<std::shared_ptr<IElement>>& tempPopulation) override;
+    virtual std::vector<std::shared_ptr<IElement>>
+    mutate(std::vector<std::shared_ptr<IElement>> &tempPopulation) override;
 
     virtual std::vector<std::shared_ptr<IElement>> reproduce() override;
 
-    virtual void success(std::vector<std::shared_ptr<IElement>>& tempPopulation) override;
+    virtual void success(std::vector<std::shared_ptr<IElement>> &tempPopulation) override;
 
     virtual bool finish() override;
+
+    unsigned getCurrentPopulation() { return currentPopulation; }
 
 private:
     std::shared_ptr<IElement> maxElement;
