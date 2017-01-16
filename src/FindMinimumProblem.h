@@ -4,9 +4,12 @@
 
 #include "Problem.h"
 
-class FindMinimumProblem : public Problem{
+class FindMinimumProblem : public Problem {
 public:
-    static const size_t POPULATION_SIZE;
+    size_t populationSize;
+
+    FindMinimumProblem(size_t populationSize, double difference)
+            : populationSize(populationSize), difference(difference) {};
 
     std::vector<std::shared_ptr<IElement>> select(std::shared_ptr<IElement> &point) override;
 
@@ -14,8 +17,10 @@ public:
 
     std::vector<std::shared_ptr<IElement>> generate() override;
 
+    size_t getPopulationSize() override;
+
 private:
-    double static const DIFFRENCE;
+    double difference;
 };
 
 

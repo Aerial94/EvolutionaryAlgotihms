@@ -3,9 +3,10 @@
 #define EVOLUTIONARYALGOTIHMS_CARTESIANPOINT_H
 
 
+#include <ostream>
 #include "IElement.h"
 
-class CartesianPoint : public IElement{
+class CartesianPoint : public IElement {
 
 public:
     CartesianPoint(double x, double y);
@@ -17,6 +18,11 @@ public:
     double getX() const;
 
     double getY() const;
+
+    friend std::ostream& operator<< (std::ostream& stream, const CartesianPoint& point) {
+        stream << point.x << "    " << point.y;
+        return stream;
+    }
 
 private:
     double x;

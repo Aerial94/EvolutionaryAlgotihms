@@ -3,10 +3,6 @@
 #include "FindMinimumProblem.h"
 #include "CartesianPoint.h"
 
-const double FindMinimumProblem::DIFFRENCE = 0.005;
-const size_t FindMinimumProblem::POPULATION_SIZE = 20;
-
-
 std::vector<std::shared_ptr<IElement>> FindMinimumProblem::select(std::shared_ptr<IElement> &point) {
     std::vector<std::shared_ptr<IElement>> newPoints;
     auto cartesianPoint = std::static_pointer_cast<CartesianPoint>(point);
@@ -15,8 +11,8 @@ std::vector<std::shared_ptr<IElement>> FindMinimumProblem::select(std::shared_pt
         for (int j = -1; j <= 1; j++) {
             if (i == 0 && j == 0)
                 continue;
-            newPoints.push_back(std::make_shared<CartesianPoint>(cartesianPoint->getX() + DIFFRENCE * i,
-                                                                 cartesianPoint->getY() + DIFFRENCE * i));
+            newPoints.push_back(std::make_shared<CartesianPoint>(cartesianPoint->getX() + difference * i,
+                                                                 cartesianPoint->getY() + difference * i));
         }
     }
     return newPoints;
@@ -33,8 +29,12 @@ std::vector<std::shared_ptr<IElement>> FindMinimumProblem::generate() {
     std::default_random_engine generator(seed);
     std::vector<std::shared_ptr<IElement>> newPoints;
 
-    for (int i = 0; i < POPULATION_SIZE; ++i) {
+    for (int i = 0; i < populationSize; ++i) {
         newPoints.push_back(std::make_shared<CartesianPoint>(distribution(generator), distribution(generator)));
     }
     return newPoints;
+}
+
+size_t FindMinimumProblem::getPopulationSize() {
+    return populationSize;
 }

@@ -5,16 +5,22 @@
 #include "../src/FindMinimumProblem.h"
 #include "../src/CartesianPoint.h"
 #include "../src/SimpleEvolutionaryAlgorithm.h"
+#include "../src/FindMinimumProblemBuilder.h"
+#include "../src/EvolutionaryAlgorithmBuilder.h"
 
 std::unique_ptr<StandardEvolutionaryAlgorithm> setupAlgorithm() {
-    std::shared_ptr<Problem> problem(new FindMinimumProblem());
-    std::unique_ptr<StandardEvolutionaryAlgorithm> algorithm(new StandardEvolutionaryAlgorithm(problem));
+    std::unique_ptr<FindMinimumProblemBuilder> problemBuilder(new FindMinimumProblemBuilder());
+    std::shared_ptr<Problem> problem(problemBuilder->build());
+    std::unique_ptr<EvolutionaryAlgorithmBuilder> algorithmBuilder(new EvolutionaryAlgorithmBuilder(EvolutionaryAlgorithmBuilder::STANDARD_ALGORITHM, problem));
+    std::unique_ptr<StandardEvolutionaryAlgorithm> algorithm(static_cast<StandardEvolutionaryAlgorithm*>(algorithmBuilder->build()));
     return std::move(algorithm);
 }
 
 std::unique_ptr<SimpleEvolutionaryAlgorithm> setupSimpleAlgorithm() {
-    std::shared_ptr<Problem> problem(new FindMinimumProblem());
-    std::unique_ptr<SimpleEvolutionaryAlgorithm> algorithm(new SimpleEvolutionaryAlgorithm(problem));
+    std::unique_ptr<FindMinimumProblemBuilder> problemBuilder(new FindMinimumProblemBuilder());
+    std::shared_ptr<Problem> problem(problemBuilder->build());
+    std::unique_ptr<EvolutionaryAlgorithmBuilder> algorithmBuilder(new EvolutionaryAlgorithmBuilder(EvolutionaryAlgorithmBuilder::SIMPLE_ALGORITHM, problem));
+    std::unique_ptr<SimpleEvolutionaryAlgorithm> algorithm(static_cast<SimpleEvolutionaryAlgorithm*>(algorithmBuilder->build()));
     return std::move(algorithm);
 }
 
@@ -32,7 +38,8 @@ TEST_CASE("Algorithm has not empty population") {
 
 TEST_CASE("Should each point generate 8 points") {
     GIVEN("Setup algorithm") {
-        auto problem(new FindMinimumProblem());
+        FindMinimumProblemBuilder problemBuilder;
+        auto problem(problemBuilder.build());
         std::shared_ptr<IElement> point = std::make_shared<CartesianPoint>(0, 0);
         WHEN("Select next points") {
             auto generatePoints = problem->select(point);
@@ -46,10 +53,12 @@ TEST_CASE("Should each point generate 8 points") {
 TEST_CASE("Should reproduce generate 8 points for each point and add population") {
     GIVEN("Setup algorithm") {
         auto algorithm = std::move(setupAlgorithm());
+        FindMinimumProblemBuilder problemBuilder;
+        auto problem(problemBuilder.build());
         WHEN("Select next points") {
             auto generatePopulation = algorithm->reproduce();
             THEN("Population is not empty") {
-                REQUIRE(generatePopulation.size() == 9 * FindMinimumProblem::POPULATION_SIZE);
+                REQUIRE(generatePopulation.size() == 9 * problem->getPopulationSize());
             }
         }
     }
@@ -57,7 +66,8 @@ TEST_CASE("Should reproduce generate 8 points for each point and add population"
 
 TEST_CASE("Should iteration of algorithm create not worse point") {
     GIVEN("Setup algorithm") {
-        auto problem(new FindMinimumProblem());
+        FindMinimumProblemBuilder problemBuilder;
+        auto problem(problemBuilder.build());
         auto algorithm = std::move(setupAlgorithm());
         auto bestPrevPoint = algorithm->getPopulation()[0];
         WHEN("One iteration of algorithm") {
@@ -142,7 +152,8 @@ TEST_CASE("Should mutation of point create new one within distribution") {
 TEST_CASE("Should population after succession be sorted") {
     GIVEN("Setup algorithm") {
         auto algorithm = std::move(setupAlgorithm());
-        auto problem(new FindMinimumProblem());
+        FindMinimumProblemBuilder problemBuilder;
+        auto problem(problemBuilder.build());
         auto rate = 999999.0;
         WHEN("Make iteration") {
             auto p1 = algorithm->reproduce();

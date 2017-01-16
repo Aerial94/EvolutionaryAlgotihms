@@ -10,7 +10,7 @@
 class StandardEvolutionaryAlgorithm : public IEvolutionaryAlgorithm {
 public:
 
-    StandardEvolutionaryAlgorithm(std::shared_ptr<Problem> problem);
+    StandardEvolutionaryAlgorithm(std::shared_ptr<Problem> problem, size_t crossoverPoints, size_t mutationSize, unsigned numberOfPopulation);
 
     virtual std::vector<std::shared_ptr<IElement>>
     crossover(std::vector<std::shared_ptr<IElement>> &tempPopulation) override;
@@ -32,9 +32,9 @@ private:
     std::shared_ptr<IElement> maxElement;
     std::vector<std::shared_ptr<IElement>> theWorstElements;
     unsigned currentPopulation;
-    const size_t CROSSOVER_POINTS = 5;
-    const size_t MUTATION_SIZE = 4;
-    const unsigned NUMBER_OF_POPULATION = 1000;
+    size_t crossoverPoints;
+    size_t mutationSize;
+    unsigned numberOfPopulation;
 
 };
 

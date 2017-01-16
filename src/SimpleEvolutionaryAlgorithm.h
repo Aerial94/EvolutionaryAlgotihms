@@ -11,7 +11,7 @@
 class SimpleEvolutionaryAlgorithm : public IEvolutionaryAlgorithm {
 public:
 
-    SimpleEvolutionaryAlgorithm(std::shared_ptr<Problem> problem);
+    SimpleEvolutionaryAlgorithm(std::shared_ptr<Problem> problem, unsigned maxTime, unsigned tournamentSize, double crossoverChance);
 
     virtual std::vector<std::shared_ptr<IElement>>
     crossover(std::vector<std::shared_ptr<IElement>> &tempPopulation) override;
@@ -29,14 +29,12 @@ public:
 
     unsigned getCurrentPopulation() { return currentPopulation; }
 
-
-
 private:
     std::chrono::system_clock::time_point startTime;
     unsigned currentPopulation;
-    unsigned MAX_TIME = 5;
-    const unsigned TOURNAMENT_SIZE = 5;
-    const double CROSSOVER_CHANCE = 0.15;
+    unsigned maxTime ;
+    unsigned tournamentSize;
+    double crossoverChance ;
 
 };
 
