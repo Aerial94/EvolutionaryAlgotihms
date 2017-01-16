@@ -1,16 +1,17 @@
-#ifndef EVOLUTIONARYALGOTIHMS_STANDARDEVOLUTIONARYALGORITHM_H
-#define EVOLUTIONARYALGOTIHMS_STANDARDEVOLUTIONARYALGORITHM_H
+#ifndef EVOLUTIONARYALGOTIHMS_SIMPLEEVOLUTIONARYALGORITHM_H
+#define EVOLUTIONARYALGOTIHMS_SIMPLEEVOLUTIONARYALGORITHM_H
 
 #include <vector>
 #include <cstdio>
 #include <memory>
+#include <chrono>
 #include "IEvolutionaryAlgorithm.h"
 #include "Problem.h"
 
-class StandardEvolutionaryAlgorithm : public IEvolutionaryAlgorithm {
+class SimpleEvolutionaryAlgorithm : public IEvolutionaryAlgorithm {
 public:
 
-    StandardEvolutionaryAlgorithm(std::shared_ptr<Problem> problem);
+    SimpleEvolutionaryAlgorithm(std::shared_ptr<Problem> problem);
 
     virtual std::vector<std::shared_ptr<IElement>>
     crossover(std::vector<std::shared_ptr<IElement>> &tempPopulation) override;
@@ -24,19 +25,20 @@ public:
 
     virtual bool finish() override;
 
-    virtual void init() {};
+    virtual void init() override;
 
     unsigned getCurrentPopulation() { return currentPopulation; }
 
+
+
 private:
-    std::shared_ptr<IElement> maxElement;
-    std::vector<std::shared_ptr<IElement>> theWorstElements;
+    std::chrono::system_clock::time_point startTime;
     unsigned currentPopulation;
-    const size_t CROSSOVER_POINTS = 5;
-    const size_t MUTATION_SIZE = 4;
-    const unsigned NUMBER_OF_POPULATION = 1000;
+    unsigned MAX_TIME = 5;
+    const unsigned TOURNAMENT_SIZE = 5;
+    const double CROSSOVER_CHANCE = 0.15;
 
 };
 
 
-#endif //EVOLUTIONARYALGOTIHMS_STANDARDEVOLUTIONARYALGORITHM_H
+#endif //EVOLUTIONARYALGOTIHMS_SIMPLEEVOLUTIONARYALGORITHM_H

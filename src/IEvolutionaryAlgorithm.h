@@ -13,6 +13,7 @@ public:
     virtual std::vector<std::shared_ptr<IElement>> reproduce() = 0;
     virtual void success(std::vector<std::shared_ptr<IElement>>& tempPopulation) = 0;
     virtual bool finish() = 0;
+    virtual void init() = 0;
 
     std::vector<std::shared_ptr<IElement>> const& getPopulation() const {
         return population;

@@ -9,6 +9,7 @@ Runner::~Runner() {
 }
 
 std::vector<std::shared_ptr<IElement>> Runner::run() {
+    algorithm->init();
     while (!algorithm->finish()) {
         std::vector<std::shared_ptr<IElement>> p1 = algorithm->reproduce();
         std::vector<std::shared_ptr<IElement>> p2 = algorithm->mutate(p1);

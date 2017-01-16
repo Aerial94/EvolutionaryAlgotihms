@@ -19,7 +19,7 @@ add_executable(
         ../src/FindMinimumProblem.h
         ../src/FindMinimumProblem.cpp
         ../src/CartesianPoint.cpp
-        ../src/CartesianPoint.h)
+        ../src/CartesianPoint.h ../src/SimpleEvolutionaryAlgorithm.cpp ../src/SimpleEvolutionaryAlgorithm.h)
 
 target_link_libraries(Test Catch)
 

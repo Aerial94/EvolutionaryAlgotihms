@@ -4,6 +4,7 @@
 #include "../src/StandardEvolutionaryAlgorithm.h"
 #include "../src/FindMinimumProblem.h"
 #include "../src/CartesianPoint.h"
+#include "../src/SimpleEvolutionaryAlgorithm.h"
 
 std::unique_ptr<StandardEvolutionaryAlgorithm> setupAlgorithm() {
     std::shared_ptr<Problem> problem(new FindMinimumProblem());
@@ -11,6 +12,11 @@ std::unique_ptr<StandardEvolutionaryAlgorithm> setupAlgorithm() {
     return std::move(algorithm);
 }
 
+std::unique_ptr<SimpleEvolutionaryAlgorithm> setupSimpleAlgorithm() {
+    std::shared_ptr<Problem> problem(new FindMinimumProblem());
+    std::unique_ptr<SimpleEvolutionaryAlgorithm> algorithm(new SimpleEvolutionaryAlgorithm(problem));
+    return std::move(algorithm);
+}
 
 TEST_CASE("Algorithm has not empty population") {
     GIVEN("Setup algorithm") {
