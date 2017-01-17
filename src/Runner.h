@@ -8,11 +8,11 @@
 
 class Runner {
 public:
-    Runner(std::unique_ptr<IEvolutionaryAlgorithm> algorithm) : algorithm(std::move(algorithm)) {}
+    Runner(std::shared_ptr<IEvolutionaryAlgorithm> algorithm) : algorithm(algorithm) {}
     virtual ~Runner();
     std::vector<std::shared_ptr<IElement>> run();
 protected:
-    std::unique_ptr<IEvolutionaryAlgorithm> algorithm;
+    std::shared_ptr<IEvolutionaryAlgorithm> algorithm;
 
 };
 

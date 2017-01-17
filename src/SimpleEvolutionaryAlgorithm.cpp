@@ -35,7 +35,7 @@ void SimpleEvolutionaryAlgorithm::success(std::vector<std::shared_ptr<IElement>>
     std::uniform_int_distribution<int> distribution(0, tempPopulation.size() - 1);
     for (int i = 0; i < tempPopulation.size(); i++) {
         for (int j = 0; j < tournamentSize; j++) {
-            tournamentElements.push_back(std::move(tempPopulation[distribution(generator)]));
+            tournamentElements.push_back(tempPopulation[distribution(generator)]);
         }
         auto tournamentWinner = std::max_element(tournamentElements.begin(), tournamentElements.end(),
         [&](std::shared_ptr<IElement> &a, std::shared_ptr<IElement> &b){
