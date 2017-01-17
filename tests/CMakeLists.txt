@@ -4,7 +4,7 @@ project(EvolutionaryAlgotihms)
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE)
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O0 -g --coverage")
 
 add_executable(
         Test
