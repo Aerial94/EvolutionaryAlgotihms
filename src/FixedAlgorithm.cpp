@@ -38,13 +38,16 @@ void FixedAlgorithm::success(std::vector<std::shared_ptr<IElement>> &tempPopulat
         population = tempPopulation;
         return;
     }
-    std::sort(connectedPairs.begin(), connectedPairs.end(),
-              [&](std::pair<int, int> &a,std::pair<int, int> &b) -> bool {
-                  return problem->rate(tempPopulation[a.first]) +  problem->rate(tempPopulation[a.second]) >
-                          problem->rate(tempPopulation[b.first]) +  problem->rate(tempPopulation[b.second]);
+    std::vector<std::pair<int, int>> temp(connectedPairs);
+    std::sort(temp.begin(), temp.end(),
+              [&](const std::pair<int, int>& a, const std::pair<int, int>& b) -> bool {
+                  double first = problem->rate(tempPopulation[a.first]) +  problem->rate(tempPopulation[a.second]);
+                  double second = problem->rate(tempPopulation[b.first]) +  problem->rate(tempPopulation[b.second]);
+                  return first > second;
               });
     std::vector<std::shared_ptr<IElement>> newPopulation;
-    for(std::pair<int,int> pair: connectedPairs) {
+
+    for(std::pair<int,int> pair: temp) {
         if(newPopulation.size() < problem->getPopulationSize()) {
             newPopulation.push_back(tempPopulation[pair.first]);
             newPopulation.push_back(tempPopulation[pair.second]);
@@ -54,7 +57,7 @@ void FixedAlgorithm::success(std::vector<std::shared_ptr<IElement>> &tempPopulat
     }
     population = std::vector<std::shared_ptr<IElement>>(newPopulation);
     currentIteration = 0;
-    connectedPairs = std::vector<std::pair<int, int>>();
+    connectedPairs.clear();
 }
 
 std::vector<std::shared_ptr<IElement>> FixedAlgorithm::mutate(std::vector<std::shared_ptr<IElement>> &tempPopulation) {
@@ -75,10 +78,8 @@ void FixedAlgorithm::connectIntoPairs(std::vector<std::shared_ptr<IElement>> &te
     for(int i = populationSize; i < populationSize + tempPopulation.size(); i++ )
         myVec.push_back(i);
     unsigned seed = (unsigned int) std::chrono::system_clock::now().time_since_epoch().count();
-    std::cout<<myVec.size()<<std::endl;
 
     std::shuffle(myVec.begin(), myVec.end(), std::default_random_engine(seed));
-    std::cout<<myVec.size()<<std::endl;
 
     for(int i = 0; i < myVec.size()-1; i = i + 2) {
         std::pair<int, int> pair(myVec[i], myVec[i+1]);
