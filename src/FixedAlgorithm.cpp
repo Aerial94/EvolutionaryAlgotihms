@@ -44,7 +44,7 @@ void FixedAlgorithm::success(std::vector<std::shared_ptr<IElement>> &tempPopulat
 }
 
 std::vector<std::shared_ptr<IElement>> FixedAlgorithm::mutate(std::vector<std::shared_ptr<IElement>> &tempPopulation) {
-    return std::vector<std::shared_ptr<IElement>>();
+    return std::vector<std::shared_ptr<IElement>>(tempPopulation);
 }
 
 std::vector<std::shared_ptr<IElement>>
@@ -63,6 +63,10 @@ void FixedAlgorithm::connectIntoPairs(std::vector<std::shared_ptr<IElement>> &te
         std::pair<int, int> pair(myVec[i], myVec[i+1]);
         connectedPairs.push_back(pair);
     }
+}
+
+bool FixedAlgorithm::finish() {
+    return currentPopulation > numberOfPopulation;
 }
 
 

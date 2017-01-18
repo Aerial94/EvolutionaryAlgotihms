@@ -8,7 +8,7 @@
 
 #include "IEvolutionaryAlgorithm.h"
 
-class FixedAlgorithm : IEvolutionaryAlgorithm{
+class FixedAlgorithm : public IEvolutionaryAlgorithm{
 
 public:
 
@@ -24,7 +24,7 @@ public:
 
     virtual void success(std::vector<std::shared_ptr<IElement>> &tempPopulation) override;
 
-    virtual bool finish() {};
+    virtual bool finish() override;
 
     virtual void init() {};
 
@@ -32,7 +32,7 @@ public:
 
 private:
     void connectIntoPairs(std::vector<std::shared_ptr<IElement>> &tempPopulation, size_t populationSize);
-    std::list<std::pair<int, int>> connectedPairs;
+    std::vector<std::pair<int, int>> connectedPairs;
     unsigned currentIteration;
     unsigned currentPopulation;
     unsigned duration;
