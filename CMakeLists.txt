@@ -15,7 +15,7 @@ set(SOURCE_FILES
      src/FindMinimumProblem.cpp
      src/FindMinimumProblem.h
      src/CartesianPoint.cpp
-     src/CartesianPoint.h src/SimpleEvolutionaryAlgorithm.cpp src/SimpleEvolutionaryAlgorithm.h src/FindMinimumProblemBuilder.h src/EvolutionaryAlgorithmBuilder.h src/BuilderHelper.cpp src/BuilderHelper.h)
+     src/CartesianPoint.h src/SimpleEvolutionaryAlgorithm.cpp src/SimpleEvolutionaryAlgorithm.h src/FindMinimumProblemBuilder.h src/EvolutionaryAlgorithmBuilder.h src/BuilderHelper.cpp src/BuilderHelper.h src/FixedAlgorithm.cpp src/FixedAlgorithm.h)
 
 add_executable(EvolutionaryAlgotihms ${SOURCE_FILES} src/main.cpp)
 
