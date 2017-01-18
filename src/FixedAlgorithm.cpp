@@ -1,11 +1,6 @@
-//
-// Created by Wiktor on 18.01.2017.
-//
-
 #include <algorithm>
 #include <chrono>
 #include "FixedAlgorithm.h"
-#include <iostream>
 
 FixedAlgorithm::FixedAlgorithm(std::shared_ptr<Problem> problem, size_t duration, unsigned numberOfPopulation)
         : IEvolutionaryAlgorithm(problem), duration(duration), numberOfPopulation(numberOfPopulation), currentPopulation(0),
@@ -21,7 +16,7 @@ std::vector<std::shared_ptr<IElement>> FixedAlgorithm::reproduce() {
     unsigned seed = (unsigned int) std::chrono::system_clock::now().time_since_epoch().count();
     std::default_random_engine generator(seed);
     std::uniform_int_distribution<int> distribution(0, population.size() - 1);
-    for (int i = 0 ; i < 2; ++i) {
+    for (int i = 0 ; i < 20; ++i) {
         std::shared_ptr<IElement> element = population[distribution(generator)];
         std::vector<std::shared_ptr<IElement>> neighbours = problem->select(element);
         newPopulation.insert(newPopulation.end(), neighbours.begin(), neighbours.end());
@@ -78,7 +73,6 @@ void FixedAlgorithm::connectIntoPairs(std::vector<std::shared_ptr<IElement>> &te
     for(int i = populationSize; i < populationSize + tempPopulation.size(); i++ )
         myVec.push_back(i);
     unsigned seed = (unsigned int) std::chrono::system_clock::now().time_since_epoch().count();
-    std::cout<<myVec.size()<<std::endl;
 
     std::shuffle(myVec.begin(), myVec.end(), std::default_random_engine(seed));
     for(int i = 0; i < myVec.size()-1; i = i + 2) {
