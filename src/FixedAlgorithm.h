@@ -8,7 +8,7 @@
 
 #include "IEvolutionaryAlgorithm.h"
 
-class FixedAlgorithm : public IEvolutionaryAlgorithm{
+class FixedAlgorithm : public IEvolutionaryAlgorithm {
 
 public:
 

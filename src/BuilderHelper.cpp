@@ -50,6 +50,9 @@ std::shared_ptr<IEvolutionaryAlgorithm> BuilderHelper::createAlgorithm() {
         mutationSize = valueFromStream<size_t>();
         algorithmBuilder = std::shared_ptr<EvolutionaryAlgorithmBuilder>(new EvolutionaryAlgorithmBuilder(EvolutionaryAlgorithmBuilder::STANDARD_ALGORITHM, problem));
         algorithm = std::shared_ptr<IEvolutionaryAlgorithm>(algorithmBuilder->withCrossoverPoints(crossoverPoints)->withMutationSize(mutationSize)->build());
+    } else if (algorithmType == 3) {
+        algorithmBuilder = std::shared_ptr<EvolutionaryAlgorithmBuilder>(new EvolutionaryAlgorithmBuilder(EvolutionaryAlgorithmBuilder::FIXED_ALGORITHM, problem));
+        algorithm = std::shared_ptr<IEvolutionaryAlgorithm>(algorithmBuilder->build());
     }
     return algorithm;
 }
