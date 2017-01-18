@@ -28,7 +28,11 @@ std::shared_ptr<IEvolutionaryAlgorithm> BuilderHelper::createAlgorithm() {
     size_t crossoverPoints;
     size_t mutationSize;
     std::shared_ptr<IEvolutionaryAlgorithm> algorithm;
-    std::cout << "Choose algorithm type: [1] SimpleEvolutionaryAlgorithm [2] StandardEvolutionaryAlgorithm: [0] Exit" << std::endl;
+    std::cout << "Choose algorithm type:" << std::endl
+              << "[1] SimpleEvolutionaryAlgorithm" << std::endl
+              << "[2] StandardEvolutionaryAlgorithm" << std::endl
+              << "[3] FixedAlgorithm" << std::endl
+              << "[0] Exit" << std::endl;
     algorithmType = valueFromStream<int>();
     if(algorithmType == 0) {
         return nullptr;
