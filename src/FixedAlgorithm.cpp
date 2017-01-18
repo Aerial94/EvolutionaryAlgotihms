@@ -57,7 +57,7 @@ void FixedAlgorithm::success(std::vector<std::shared_ptr<IElement>> &tempPopulat
     }
     population = std::vector<std::shared_ptr<IElement>>(newPopulation);
     currentIteration = 0;
-    connectedPairs.clear();
+    connectedPairs = std::vector<std::pair<int, int>>();
 }
 
 std::vector<std::shared_ptr<IElement>> FixedAlgorithm::mutate(std::vector<std::shared_ptr<IElement>> &tempPopulation) {
@@ -78,9 +78,9 @@ void FixedAlgorithm::connectIntoPairs(std::vector<std::shared_ptr<IElement>> &te
     for(int i = populationSize; i < populationSize + tempPopulation.size(); i++ )
         myVec.push_back(i);
     unsigned seed = (unsigned int) std::chrono::system_clock::now().time_since_epoch().count();
+    std::cout<<myVec.size()<<std::endl;
 
     std::shuffle(myVec.begin(), myVec.end(), std::default_random_engine(seed));
-
     for(int i = 0; i < myVec.size()-1; i = i + 2) {
         std::pair<int, int> pair(myVec[i], myVec[i+1]);
         connectedPairs.push_back(pair);
