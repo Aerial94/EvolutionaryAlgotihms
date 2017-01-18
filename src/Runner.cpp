@@ -16,11 +16,6 @@ std::vector<std::shared_ptr<IElement>> Runner::run() {
         std::vector<std::shared_ptr<IElement>> p3 = algorithm->crossover(p2);
         algorithm->success(p3);
     }
-    std::vector<std::shared_ptr<IElement>> finalPopulation = algorithm->getPopulation();
-    for (int i = 0; i < finalPopulation.size(); ++i) {
-        auto cartesianPoint = std::static_pointer_cast<CartesianPoint>(finalPopulation[i]);
-        std::cout << cartesianPoint->getX() << " " << cartesianPoint->getY() << std::endl;
-    }
     return algorithm->getPopulation();
 }
 
